@@ -1,0 +1,129 @@
+<html>
+    <head>
+        <title>
+        
+        My First Game
+        </title>
+    
+    </head>
+    
+    <body>
+        <canvas id="mycanvas" width ="800px" height="600px" style="border: 2px solid black;">
+        
+        </canvas>
+    
+    </body>
+    
+    <script>
+        var canvas = document.getElementById('mycanvas');
+        var ctx = canvas.getContext('2d');
+        
+        var GAME_WIDTH = 800;
+        var GAME_HEIGHT = 600;
+        var game_over = false;
+        
+        var enemy = {
+        x:100,
+        y:100,
+        w:50,
+        h:50,
+        seepdY:10
+        };
+        
+        var player = {
+            x:10,
+            y:GAME_HEIGHT/2,
+            w:20,
+            h:20,
+            speedX:20,
+            isMoving: false,
+
+        };
+        
+        var Goal = {
+            x:GAME_WIDTH-50,
+            y:GAME_HEIGHT/2,
+            w:20,
+            h:20,
+        };
+        
+        canvas.addEventListener('mousedown', function(){
+            player.isMoving = true;
+        })
+        
+         canvas.addEventListener('mouseup', function(){
+            player.isMoving = false;
+        })
+        
+        var isColliding = function(r1,r2){
+            var firstCond = Math.abs(r1.x - r2.x) <= 20;
+            var secondCond = Math.abs(r1.y - r2.y) <=20;
+            
+            if(firstCond && secondCond){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        
+        var draw = function () {
+        ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        
+        ctx.fillStyle = "rgb(110,234,450)"
+        ctx.fillRect(enemy.x,enemy.y,enemy.w,enemy.h);
+        
+        
+        ctx.fillStyle = "rgb(110,134,450)"
+        ctx.fillRect(player.x,player.y,player.w,player.h);
+            
+        ctx.fillStyle = "rgb(110,134,450)"
+        ctx.fillRect(Goal.x,Goal.y,Goal.w,Goal.h);
+    
+        }
+        
+        var update = function() {
+            
+            
+            enemy.y = enemy.y + enemy.seepdY;
+            if( (enemy.y >= GAME_HEIGHT-enemy.h) || (enemy.y<0) ){
+                enemy.seepdY *= -1; 
+            }
+            
+            if(player.isMoving == true){
+                player.x = player.x + player.speedX;
+            }
+            
+            
+            if(isColliding(player,enemy)==true) {
+                alert("GAME OVER");
+                game_over = true;
+                
+            }
+            
+            if(isColliding(player,Goal)==true) {
+                alert("YOU WON");
+                game_over = true;
+            }
+            
+            
+            
+        }
+        
+        var render = function() {
+            console.log('I am render');
+            draw();
+            update();
+            if(game_over==false) {
+            window.requestAnimationFrame(render);
+            }
+        }
+        
+        render();
+
+        
+    
+    </script>
+    
+    
+</html>
