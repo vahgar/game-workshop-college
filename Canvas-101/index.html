@@ -4,11 +4,17 @@
         
         My First Game
         </title>
-    
+    	<style type="text/css">
+
+    	#mycanvas{
+    		border: 2px solid black;
+    		background-image: url("Assets/background.jpg");
+    	}	
+    	</style>
     </head>
     
     <body>
-        <canvas id="mycanvas" width ="800px" height="600px" style="border: 2px solid black;">
+        <canvas id="mycanvas" width ="800px" height="600px" >
         
         </canvas>
     
@@ -29,24 +35,32 @@
         h:50,
         seepdY:10
         };
-        
+
+        var enemyImage = new Image();
+        enemyImage.src = "Assets/gengar.png";
         var player = {
             x:10,
             y:GAME_HEIGHT/2,
-            w:20,
-            h:20,
-            speedX:20,
+            w:50,
+            h:50,
+            speedX:10,
             isMoving: false,
 
         };
         
+        var playerImage = new Image();
+        	playerImage.src = "Assets/pika.png";
+
         var Goal = {
             x:GAME_WIDTH-50,
             y:GAME_HEIGHT/2,
-            w:20,
-            h:20,
+            w:50,
+            h:50,
         };
         
+        var goalImage = new Image();
+        goalImage.src = "Assets/ball.png";
+ 
         canvas.addEventListener('mousedown', function(){
             player.isMoving = true;
         })
@@ -71,14 +85,14 @@
         ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         
         ctx.fillStyle = "rgb(110,234,450)"
-        ctx.fillRect(enemy.x,enemy.y,enemy.w,enemy.h);
+        ctx.drawImage(enemyImage,enemy.x,enemy.y,enemy.w,enemy.h);
         
         
         ctx.fillStyle = "rgb(110,134,450)"
-        ctx.fillRect(player.x,player.y,player.w,player.h);
+        ctx.drawImage(playerImage,player.x,player.y,player.w,player.h);
             
         ctx.fillStyle = "rgb(110,134,450)"
-        ctx.fillRect(Goal.x,Goal.y,Goal.w,Goal.h);
+        ctx.drawImage(goalImage,Goal.x,Goal.y,Goal.w,Goal.h);
     
         }
         
